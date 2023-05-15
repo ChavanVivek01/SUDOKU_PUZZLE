@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="mybootstrap.CSS">
+    <link rel="stylesheet" href="digital-timer.css">
+    <link rel="stylesheet" href="progress-bar.css">
+    <link rel="stylesheet" href="animation-coundown-timer.css">
+    <link rel="stylesheet" href="snakbar-and-alert.css">
+    <link rel="stylesheet" href="theme-toggle-button.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- <div>
+        <nav class="navbar">
+            <ul>Sudoku</ul>
+            
+            <div>
+                <ul>LogIn</ul>
+            </div>
+        </nav>
+    </div> -->
+
+
+
+
+    <header class="center-screen">
+    <table class="center-screen" style="padding-top: 10px;">
+        <tr style="color: aliceblue;">
+            <td >Choose Difficulty</td>
+            <td>Choose Time</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" id="difficulty-easy" name="diff" value="easy" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="difficulty-easy">
+                        Easy
+                    </label>
+
+                    <input type="radio" class="btn-check" id="difficulty-medium" name="diff" value="medium" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="difficulty-medium">
+                        Medium
+                    </label>
+
+                    <input type="radio" class="btn-check" id="difficulty-hard" name="diff" value="hard" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="difficulty-hard">
+                        Hard
+                    </label>
+                </div>
+            </td>
+            <td style="    text-align: center;padding-left: 30px;">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" id="time-3mins" name="time" value="three" autocomplete="off" checked >
+                    <label class="btn btn-outline-primary" for="time-3mins">
+                        3 Mins
+                    </label>
+
+                    <input type="radio" class="btn-check" id="time-5mins" name="time" value="five" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="time-5mins">
+                        5 Mins
+                    </label>
+
+                    <input type="radio" class="btn-check" id="time-10mins" name="time" value="ten" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="time-10mins">
+                        10 Mins
+                    </label>
+
+                    <input type="radio" class="btn-check" id="time-stopwatch" name="time" value="stopwatch" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="time-stopwatch">
+                        StopWatch
+                    </label>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <button type="button" class="mybutton" id="start-btn">Start!</button>
+
+    </header>
+
+
+    <div id="game-container">
+
+        <div class="alert alert-warning center-screen hidden" id="alert-pause" role="alert">
+            <strong>PAUSED</strong>
+        </div>
+
+        <div id="stats" class="center-screen">
+
+            <div id="time-1">
+                <div id="animated-timer-container" class="hidden" style="margin-top: 35px;"></div>
+                <div id="digital-timer-container" class="hidden" style="margin-top: 35px;"></div>
+                <div id="progress-bar-container" class="hidden"></div>
+            </div>
+
+            <div id="time-2">
+                <div id="stopwatch-container" class="hidden" style="margin-top: 35px;"></div>                
+            </div>
+
+            <p id="lives"></p>
+            <div class="snackbar" id="snackbar-win">You Won! </div>
+            <div class="snackbar" id="snackbar-lose">You lost! </div>
+        </div>
+
+        <div id="game" class="center-screen border">
+            <div id="board"></div>
+            <div id="number-container" class="hidden">
+                <p id="one">1</p>
+                <p id="two">2</p>
+                <p id="three">3</p>
+                <p id="four">4</p>
+                <p id="five">5</p>
+                <p id="six">6</p>
+                <p id="seven">7</p>
+                <p id="eight">8</p>
+                <p id="nine">9</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="toast" id="myToast" >
+        <div class="toast-header" id="t-header">
+            <strong class="me-auto">Tips</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" id="t-body"></div>
+    </div>
+
+
+
+    <p>
+        <div class="center-screen" >
+            <div class="btn-group" role="group"> 
+                <button type="button" id="tips-btn" class="btn btn-secondary btn-sm" disabled rel="tooltip" title="Show all possible values for each empty cell." data-placement="bottom">
+                    Tips
+                </button>
+
+                <button type="button" id="solve-btn" class="btn btn-secondary btn-sm" disabled rel="tooltip" title="Solve the current Sudoku puzzle." data-placement="bottom">
+                    Show Solution
+                </button>
+
+                <button type="button" id="solve-one-step-btn" class="btn btn-secondary btn-sm" disabled rel="tooltip" title="Solve one empty cell for the current Sudoku puzzle." data-placement="bottom">
+                    Solve One Step
+                </button>
+            </div>
+
+
+            <div class="btn-group" role="group" >
+                <button type="button" id="refresh-btn" class="btn btn-secondary btn-sm" disabled rel="tooltip" title="Refresh the Sudoku board with the same difficulty." data-placement="bottom">
+                    Refresh
+                </button>
+
+                <button type="button" id="restart-btn" class="btn btn-secondary btn-sm" disabled rel="tooltip" title="Restart the puzzle by clearing all cells you just tried to solve" data-placement="bottom">
+                    Restart
+                </button>
+            </div>
+
+
+            <div class="btn-group" role="group">
+                <button type="button" id="pause-btn" class="btn btn-secondary btn-sm" disabled>
+                    Pause
+                </button>
+
+                <button type="button" id="resume-btn" class="btn btn-secondary btn-sm" disabled>
+                    Resume
+                </button>
+            </div>
+        </div>
+    </p>
+
+    <hr style="width: 100%;margin-left: auto;margin-right: auto;">
+
+    <footer>
+        <p class="small text-center text-muted center-screen">
+            Created By <a target="_blank" href="">Vivek Vitthal Chavan.</a>. &copy;
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+        </p>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin=" anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./JSscripts/helperSudoku.js"></script>
+    <script src="./JSscripts/utilitySudoku.js"></script>
+    <script src="./JSscripts/solveSudoku.js"></script>
+    <script src="./JSscripts/generateSudoku.js"></script>
+    <script src="./JSscripts/candidatesSudoku.js"></script>
+    <script src="./JSscripts/stopwatch.js"></script>
+    <script src="./JSscripts/countdown-timer.js"></script>
+    <script src="./JSscripts/progress-bar.js"></script>
+    <script src="./JSscripts/app.js"></script>
+
+</body>
+</html>

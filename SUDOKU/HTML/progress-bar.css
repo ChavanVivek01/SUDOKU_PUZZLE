@@ -1,0 +1,24 @@
+#progress-bar-container{
+    width: 80%;
+    margin: 25px auto;
+    border: 1px black solid;
+    border-radius: 10px;
+}
+
+#progress-bar{
+    height: 15px;
+    width: 100%;
+    transition: width 1s linear;
+    border-radius: 10px;
+}
+
+#progress-bar.green{
+    background-color: aquamarine;
+}
+
+#progress-bar.orange{
+    background-color: orange;
+}
+#progress-bar.red{
+    background-color: red;
+}
